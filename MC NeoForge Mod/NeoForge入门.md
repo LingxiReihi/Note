@@ -18,7 +18,7 @@
 
 而下载`NeoForge`套件则需要到生成模板去下载：[Mod Generator - The NeoForged project](https://neoforged.net/mod-generator/)
 
-![20251227174412662.png (2560×1380)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251227174412662.png?token=GHSAT0AAAAAADSJ25GE3KLOTSFCOYTSRNXU2KYZFCA)
+![image-20260103185834025](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103185841178.png?token=AWBLCRTC4R25NTH72CNHG33JLD3G2)
 
 在此页面中直接下载后的导入IDE即可。
 
@@ -26,7 +26,7 @@
 
 下载完成后，在`Gradle`中找到上方下载箭头，下载我的世界的源代码：
 
-![20251227174444224.png (2560×1440)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251227174444224.png?token=GHSAT0AAAAAADSJ25GECOB2U2TVWOWIOZX42KYZKFA)
+![image-20260103221046468](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103221046679.png)
 
 ## 关键字段等
 
@@ -48,9 +48,9 @@
 
 `parchment_mappings_version`：羊皮纸版本，可以通过上方注释中的链接进行页面访问，查看并修改为对应版本。
 
-![20251227183712135.png (1734×139)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251227183712135.png?token=GHSAT0AAAAAADSJ25GEORP6UHBQY34GMYYS2KYZKVA)
+![image-20260103221124030](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103221124081.png)
 
-![20251227183740967.png (2560×1440)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251227183740967.png?token=GHSAT0AAAAAADSJ25GFO5MBU4B5FIEVLMSS2KYZKXQ)
+![image-20260103221154967](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103221155054.png)
 
 ### `Environment Properties`环境配置
 
@@ -80,7 +80,7 @@
 
 更改完成后可以在游戏内看见自己修改后的内容：
 
-![20251227192531182.png (854×523)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251227192531182.png?token=GHSAT0AAAAAADSJ25GFTEQRLZK5TYAF4DQO2KYZLKA)
+![image-20260103221352196](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103221352308.png)
 
 ## 创建第一个物品
 
@@ -109,19 +109,19 @@ public static void register(IEventBus eventBus) {
 
 物品名称存储于`resources/assets/test_mod/lang`文件夹中。
 
-![20251228200441508.png (475×241)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251228200441508.png?token=GHSAT0AAAAAADSJ25GFZGUKO2VXJR3JXI3W2KYZLTA)
+![image-20260103221445454](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103221445481.png)
 
 添加对应`id`（`/`用`.`代替）并写入的对应语言名称即可：
 
-![20251228201452367.png (1180×455)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251228201452367.png?token=GHSAT0AAAAAADSJ25GE6AG4PEGCPRABLVFS2KYZL4A)
+![image-20260103222411302](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103222411400.png)
 
-![20251228201535036.png (1165×460)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251228201535036.png?token=GHSAT0AAAAAADSJ25GE4CPHHQKXRW3CFJXO2KYZL7A)
+![image-20260103222449618](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103222449721.png)
 
 ### 物品详情及贴图
 
 物品详情存放于`resources/assets/test_mod/models`中，贴图文件存放于`resources/assets/test_mod/textures`中，没有这两个文件夹需要手动创建。
 
-![20251228201835393.png (489×687)](https://raw.githubusercontent.com/LingxiReihi/PicGo/refs/heads/master/img/20251228201835393.png?token=GHSAT0AAAAAADSJ25GFWCHVPSOCTH5UZO3C2KYZMQA)
+<img src="https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103222535254.png" alt="image-20260103222535204" style="zoom: 50%;" />
 
 #### 物品详情
 
@@ -133,4 +133,33 @@ public static void register(IEventBus eventBus) {
   }
 }
 ```
+
+## 添加到创造模式物品栏
+
+### 添加到原有物品栏
+
+添加到原有物品栏需要在`void addCreative(BuildCreativeModeTabContentsEvent event)`函数内进行添加，以在建筑方块中添加物品：
+
+```java
+private void addCreative(BuildCreativeModeTabContentsEvent event) {
+    if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+        event.accept(ModItems.ICE_ETHER);
+        event.accept(ModItems.RAW_ICE_ETHER);
+        event.accept(ModItems.CARD_BOARDER);
+    }
+}
+```
+
+#### 原版自带的创造模式物品栏种类
+
+| `BUILDING_BLOCKS`     | 建筑方块   |
+| --------------------- | ---------- |
+| `COLORED_BLOCKS`      | 染色方块   |
+| `NATURAL_BLOCKS`      | 自然方块   |
+| `FUNCTIONAL_BLOCKS`   | 功能方块   |
+| `REDSTONE_BLOCKS`     | 红石方块   |
+| `TOOLS_AND_UTILITIES` | 工具       |
+| `FOOD_AND_DRINKS`     | 食物和药水 |
+| `INGREDDIENTS`        | 原材料     |
+| `SPAWN_EGGS`          | 生物蛋     |
 
