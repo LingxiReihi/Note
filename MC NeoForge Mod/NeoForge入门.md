@@ -18,7 +18,7 @@
 
 而下载`NeoForge`套件则需要到生成模板去下载：[Mod Generator - The NeoForged project](https://neoforged.net/mod-generator/)
 
-![image-20260103185834025](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260103185841178.png?token=AWBLCRTC4R25NTH72CNHG33JLD3G2)
+![image-20260104010855342](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260104010855458.png)
 
 在此页面中直接下载后的导入IDE即可。
 
@@ -163,3 +163,51 @@ private void addCreative(BuildCreativeModeTabContentsEvent event) {
 | `INGREDDIENTS`        | 原材料     |
 | `SPAWN_EGGS`          | 生物蛋     |
 
+### 自定义物品栏
+
+我们可以自定义物品栏名称、图标、所在位置，，并为其添加相应的物品。
+
+以下是创建自定义物品栏的相关代码：
+
+```java
+public static final Supplier<CreativeModeTab> MATERIAL_TAB =
+    CREATIVE_MODE_TABS.register("material_tab", () -> CreativeModeTab.builder()//注册一个创造模式物品栏
+            .icon(() -> new ItemStack(ModItems.CARD_BOARDER.get()))//设置图标
+            .title(Component.translatable("itemGroup.material_tab"))//设置标题（translatable：可翻译）
+            .displayItems((parameters, output) -> {//添加物品
+                output.accept(ModItems.CARD_BOARDER);
+            }).withTabsBefore(ResourceLocation.fromNamespaceAndPath(TestMod.MOD_ID, "test_tab"))//设置前置物品栏
+            .build());//创建创造模式物品栏
+```
+
+其中，`CREATIVE_MODE_TABS.register`代表我们是在创造模式情况下才出现这个物品栏。
+
+通过`.icon(() -> new ItemStack(ModItems.CARD_BOARDER.get())`来设置自定义的物品栏图标，这里可以是任何自己想要设置的图标文件。
+
+通过`.title()`来设置标题名称，其中，设置`Component.translatable`表示该标题可被翻译，，需要到配置文件中的对应位置进行修改。
+
+`.displayItems`来向我们创建的物品栏添加物品。
+
+`.withTabsBefore()`来设置我们自定义的物品栏前一栏是什么，其中括号内为前一栏来源及名称。
+
+最终使用`build()`方法进行构建。
+
+写好代码后依然需要注册函数对该类进行注册：
+
+```java
+public static void register(IEventBus eventBus) {
+    CREATIVE_MODE_TABS.register(eventBus);
+}
+```
+
+最终到主类中进行调用：
+
+```java
+ModCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+```
+
+最终在创造模式显示如下（已经汉化）：
+
+![image-20260105192229444](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260105192842013.png)
+
+![image-20260105192554431](https://raw.githubusercontent.com/LingxiReihi/PicGo/master/img/20260105192836927.png)
